@@ -1,43 +1,41 @@
-import java.util.PriorityQueue;
-import java.util.Queue;
-
-import entidades.Pessoa;
+import entidades.Paciente;
 import estatica.FilaComPrioridade;
 
 public class Main {
-    public static void main(String args[]){
-        System.out.println("--- Fila de Inteiros ---");
+    public static void main(String args[]) {
+        FilaComPrioridade<Paciente> fila = new FilaComPrioridade<>(10);
 
-        FilaComPrioridade<Integer> fila = new FilaComPrioridade<>(10);
+        System.out.println("--- Inserindo pacientes ---");
 
-        fila.enfileirar(1);
-        fila.enfileirar(3);
-        fila.enfileirar(2);
+        System.out.println("Inserindo: Carlos");
+        fila.enfileirar(new Paciente("Carlos", 2, 45, false));
+        System.out.println("Estado do Heap: " + fila);
 
-        System.out.println(fila);
+        System.out.println("Inserindo: Maria");
+        fila.enfileirar(new Paciente("Maria", 5, 5, false));
+        System.out.println("Estado do Heap: " + fila);
 
-        System.out.println("\n--- Fila de Pessoas ---");
+        System.out.println("Inserindo: João");
+        fila.enfileirar(new Paciente("João", 3, 20, false));
+        System.out.println("Estado do Heap: " + fila);
 
-        FilaComPrioridade<Pessoa> filaPessoas = new FilaComPrioridade<>(10);
+        System.out.println("Inserindo: Beatriz");
+        fila.enfileirar(new Paciente("Beatriz", 3, 35, true));
+        System.out.println("Estado do Heap: " + fila);
 
-        filaPessoas.enfileirar(new Pessoa("Adão", 1));
-        filaPessoas.enfileirar(new Pessoa("Carlos", 3));
-        filaPessoas.enfileirar(new Pessoa("Bruno", 2));
+        System.out.println("Inserindo: Pedro");
+        fila.enfileirar(new Paciente("Pedro", 5, 2, false));
+        System.out.println("Estado do Heap: " + fila);
 
-        while (!filaPessoas.estaVazia()) {
-            System.out.println(filaPessoas.desenfileirar());
-        }
+        System.out.println("Inserindo: Helena");
+        fila.enfileirar(new Paciente("Helena", 2, 45, true));
+        System.out.println("Estado do Heap: " + fila);
 
-        System.out.println("\n--- Fila de Pessoas (PriorityQueue) ---");
-
-        Queue<Pessoa> filaPessoasJava = new PriorityQueue<>(10);
-
-        filaPessoasJava.add(new Pessoa("Adão", 1));
-        filaPessoasJava.add(new Pessoa("Carlos", 3));
-        filaPessoasJava.add(new Pessoa("Bruno", 2));
-
-        while (!filaPessoasJava.isEmpty()) {
-            System.out.println(filaPessoasJava.poll());
+        System.out.println("\n--- Removendo pacientes ---");
+        int ordem = 1;
+        while (!fila.estaVazia()) {
+            System.out.println(ordem + ". " + fila.desenfileirar());
+            ordem++;
         }
     }
 }

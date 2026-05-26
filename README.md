@@ -1,21 +1,27 @@
-# Fila de Prioridade Heap
+# Fila de Prioridade com Heap
 
-## Compilar
+Trabalho prático da disciplina de Estrutura de Dados.
+Implementação de uma Fila de Prioridade utilizando a estrutura Heap Binário para simular a triagem de um hospital.
 
-```bash
-javac -d out src/entidades/Pessoa.java src/estatica/FilaEstatica.java src/estatica/FilaComPrioridade.java src/heap/FilaComPrioridadeHeap.java src/Main.java
-```
+## Compilação
 
-## Executar
-
-```bash
-java -cp out Main
-```
-
-## Gerar Javadoc
+Na pasta raiz do projeto, execute:
 
 ```bash
-javadoc -d doc -sourcepath src -subpackages estatica:heap:entidades
+mkdir -p bin
+javac -d bin src/entidades/*.java src/estatica/*.java src/*.java
 ```
 
-Abrir a documentação: `doc/index.html`
+## Execução
+
+Após compilar, execute a classe Main:
+
+```bash
+java -cp bin Main
+```
+
+## Gerar Javadoc localmente
+
+```bash
+javadoc -d doc -sourcepath src -subpackages estatica:entidades
+```

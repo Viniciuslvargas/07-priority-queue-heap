@@ -12,31 +12,68 @@ public class FilaComPrioridade<T> extends FilaEstatica<T> {
             throw new RuntimeException("A fila está cheia.");
         }
 
-        Comparable<T> elementoOrdenavel = (Comparable<T>) elemento;
-
-        int posicao;
-        for (posicao = 0; posicao < tamanho(); posicao++) {
-            if (elementoOrdenavel.compareTo(elementos[posicao]) < 0) {
-                break;
-            }
-        }
-
-        adicionaPosicao(posicao, elemento);
+        elementos[tamanho] = elemento;
+        sobeHeap(tamanho);
+        tamanho++;
     }
 
-    public void adicionaPosicao(int posicao, T elemento) {
-		if (posicao < 0 || posicao > tamanho) {
-			throw new IllegalArgumentException("Posição inválida");
-		}
+    @Override
+    public T desenfileirar() {
+        if (estaVazia()) {
+            throw new RuntimeException("A fila está vazia");
+        }
 
-        // Mover todos os elementos
-		for (int i = tamanho - 1; i >= posicao; i--) {
-			elementos[i+1] = elementos[i];
-		}
+        T raiz = elementos[0];
+        elementos[0] = elementos[tamanho - 1];
+        elementos[tamanho - 1] = null;
+        tamanho--;
 
-		elementos[posicao] = elemento;
-		tamanho++;
-	}
+        if (tamanho > 0) {
+            desceHeap(0);
+        }
+
+        return raiz;
+    }
+
+    private void sobeHeap(int indice) {
+        int indicePai = (indice - 1) / 2;
+
+        while (indice > 0 && comparar(elementos[indice], elementos[indicePai]) > 0) {
+            trocar(indice, indicePai);
+            indice = indicePai;
+            indicePai = (indice - 1) / 2;
+        }
+    }
+
+    private void desceHeap(int indice) {
+        int maior = indice;
+        int filhoEsq = 2 * indice + 1;
+        int filhoDir = 2 * indice + 2;
+
+        if (filhoEsq < tamanho && comparar(elementos[filhoEsq], elementos[maior]) > 0) {
+            maior = filhoEsq;
+        }
+
+        if (filhoDir < tamanho && comparar(elementos[filhoDir], elementos[maior]) > 0) {
+            maior = filhoDir;
+        }
+
+        if (maior != indice) {
+            trocar(indice, maior);
+            desceHeap(maior);
+        }
+    }
+
+    private void trocar(int i, int j) {
+        T temp = elementos[i];
+        elementos[i] = elementos[j];
+        elementos[j] = temp;
+    }
+
+    @SuppressWarnings("unchecked")
+    private int comparar(T a, T b) {
+        return ((Comparable<T>) a).compareTo(b);
+    }
 
     @Override
     public String toString() {
